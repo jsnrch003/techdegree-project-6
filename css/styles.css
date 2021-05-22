@@ -20,6 +20,7 @@
 
 * {
   box-sizing: border-box;
+  font-family: 'Roboto', Verdana, Geneva, Tahoma, sans-serif;
 }
 
 body {
@@ -27,6 +28,7 @@ body {
   flex-direction: column;
   display: flex;
   height: 100vh;
+  background-color: darkgray;
 }
 
 li, ol, ul {
@@ -79,9 +81,9 @@ button {
 
 .letter {
   font-size: var(--font-size-medium);
-  height: 65px;
-  width: 65px;
-  padding: 20px 1px 0 1px;
+  height: 55px;
+  width: 55px;
+  padding: 15px;
   margin-right: 2px;
   margin-bottom: 2px;
   color: transparent;
@@ -90,12 +92,20 @@ button {
 }
 
 .space {
-  width: 15px;
+  width: 20px;
 }
 
 .show {
   color: #000;
-  background-color: #76CE82;
+  font-size: var(--font-size-medium);
+  font-weight: bold;
+  height: 55px;
+  width: 55px;
+  padding: 15px;
+  margin-right: 2px;
+  margin-bottom: 2px;
+  background-color:  #f6f6e8;
+  border-radius: 5px;
 }
 
 /* Keyboard */
@@ -126,7 +136,7 @@ button {
   display: flex;
   flex-direction: column;
   position: fixed;
-  color: #FFFFFF;
+  color: #ffffff;
   justify-content: center;
   top: 0;
   bottom: 0;
@@ -146,9 +156,12 @@ button {
 .start a {
   color: var(--color-win);
 }
-
+.start a:hover {
+  cursor: pointer;
+}
 .win {
   background-color: var(--color-win);
+  display: none;
 }
 
 .win a {
@@ -157,6 +170,7 @@ button {
 
 .lose {
   background-color: var(--color-lose);
+  display: none;
 }
 
 .lose a {
