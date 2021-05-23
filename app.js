@@ -3,18 +3,14 @@
 
 const qwerty = document.getElementById('qwerty');
 const phrase = document.getElementById('phrase');
+const overlay = document.getElementById('overlay');
+const start = overlay.querySelector('.start a');
 
 
 
 
 // =============================  #3  =============================
 // Attach event listener to the "Start Game" button to hide the start screen overlay
-
-const overlay = document.getElementById('overlay');
-const start = overlay.querySelector('.start a');
-
-// const start = document.getElementsByClassName('start');
-
 start.addEventListener('click', () => {
     overlay.style.display = 'none';
 });
@@ -52,12 +48,11 @@ const phraseArray = getRandomPhraseAsArray(phrases);
 
 // =============================  #6  =============================
 // Set the game display
-
 function addPhraseToDisplay(arr) {
     const displayDiv = document.getElementById('phrase'); // get #phrase <div> in HTML
     const displayUl = displayDiv.querySelector('ul'); // get <ul> child from parent #phrase <div> in HTML
 
-    for (let i = 0; i < arr.length; i++) {  // Create function that loops through an array of characters,
+    for (let i = 0; i < arr.length; i++) {
         const li = document.createElement('li'); // creates a list item for each character,
         li.textContent = arr[i].toUpperCase(); // puts the character inside list item,
         if (li.textContent === ' ') { // adds class "space" or "letter" to respective character,
@@ -78,59 +73,52 @@ const phraseToDisplay = addPhraseToDisplay(phraseArray);
 const getLetters = [...phraseToDisplay.getElementsByClassName('letter')];
 const numLetters = getLetters.length;
 console.log(numLetters);
+let letterFound = 0;
+let letterNotFound;
+let matched;
+let missed = 0;
+
 function checkLetter(button) {
-    let show;
     for (let i = 0; i < getLetters.length; i++) {
-        let liText = getLetters[i].textContent;
-        if (button === liText) {
-            show = (getLetters[i].className = 'show');
-            console.log(show);
-        } else {
-            null;
-        }
-    } return (show || null);
+        let liText = getLetters[i].textContent; // get letters of phrase
+        // this is where I've been focusing effort to solve
+        (button === liText) ? ((getLetters[i].className = 'show') && letterFound++) : letterNotFound = null;
+    } return (letterFound || letterNotFound);
 }
 
 // =============================  #8/#9  =============================
 // Add an event listener to keyboard
 const scoreboard = document.getElementById('scoreboard');
 const tries = scoreboard.querySelectorAll('.tries');
-let missed = 0;
-let matched;
 
 qwerty.addEventListener('click', (e) => {
     const buttonSelection = e.target;
     const button = buttonSelection.textContent.toUpperCase();
-    let show;
     buttonSelection.className = 'chosen';
     buttonSelection.disabled = true;
-    letterFound = checkLetter(button);
-    console.log(letterFound);
-    if (letterFound === 'show') {
-        console.log(matched);
-        if (matched === numLetters) {
-            overlay.className = 'win';
-            overlay.querySelector('.win .title').textContent = 'You won!';
-            overlay.querySelector('.win a').textContent = 'Try again?';
-            overlay.style.display = 'flex';
-        }
-    }
-    if (letterFound === null) {
+    matched = checkLetter(button);
+    console.log(matched);
+    checkWin();
+});
+
+// =============================  #10  =============================
+// Create a checkWin function
+function checkWin() {
+    if (matched === numLetters) {
+        overlay.className = 'win';
+        overlay.style.display = 'flex';
+        overlay.querySelector('.title').textContent = 'You won!';
+        overlay.querySelector('a').outerHTML = '<a class="btn__reset" onclick="location.reload();">Try again?</a>';
+    } else if (matched === null) {
         tries[missed].innerHTML = '<img src="images/lostHeart.png" height="35px" width="30px">';
         missed++;
         if (missed === 5) {
             overlay.className = 'lose';
-            overlay.querySelector('.win .title').textContent = 'You lost!';
-            overlay.querySelector('.win a').textContent = 'Try again?';
             overlay.style.display = 'flex';
+            overlay.querySelector('.title').textContent = 'You lost!';
+            overlay.querySelector('a').outerHTML = '<a class="btn__reset" onclick="location.reload();">Try again?</a>';
         }
+
     }
 
-
-});
-
-// =============================  #10  =============================
-function checkWin() {
-
 }
-
