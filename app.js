@@ -72,18 +72,24 @@ const phraseToDisplay = addPhraseToDisplay(phraseArray);
 // Create a checkLetter function
 const getLetters = [...phraseToDisplay.getElementsByClassName('letter')];
 const numLetters = getLetters.length;
-console.log(numLetters);
 let letterFound = 0;
-let letterNotFound;
-let matched;
 let missed = 0;
 
 function checkLetter(button) {
-    for (let i = 0; i < getLetters.length; i++) {
-        let liText = getLetters[i].textContent; // get letters of phrase
-        // this is where I've been focusing effort to solve
-        (button === liText) ? ((getLetters[i].className = 'show') && letterFound++) : letterNotFound = null;
-    } return (letterFound || letterNotFound);
+    let match = false; // default state of match Letter
+
+    for (let i = 0; i < getLetters.length; i++) { // loop through letters of phrase
+        let liText = getLetters[i].textContent; // get text of <li> items making up phrase
+        if (button === liText) { // if button clicked matches a letter of the phrase
+            (getLetters[i].className = 'show'); // add class "show" to <li> item containg matched letter
+            letterFound++; // keep count of number of letters shown
+            match = true; // since button clicked matches a letter of the phrase, set match to true
+        }
+    }
+    if (match === false) { // back outside loop, if match is still false
+        return null; // return null
+    } else // if match is true
+        return letterFound; // return number of letters shown
 }
 
 // =============================  #8/#9  =============================
@@ -96,20 +102,26 @@ qwerty.addEventListener('click', (e) => {
     const button = buttonSelection.textContent.toUpperCase();
     buttonSelection.className = 'chosen';
     buttonSelection.disabled = true;
-    matched = checkLetter(button);
-    console.log(matched);
+    letterFound = checkLetter(button);
+    console.log(letterFound);
     checkWin();
 });
 
 // =============================  #10  =============================
 // Create a checkWin function
 function checkWin() {
-    if (matched === numLetters) {
-        overlay.className = 'win';
-        overlay.style.display = 'flex';
-        overlay.querySelector('.title').textContent = 'You won!';
-        overlay.querySelector('a').outerHTML = '<a class="btn__reset" onclick="location.reload();">Try again?</a>';
-    } else if (matched === null) {
+    const showLetters = [...phraseToDisplay.getElementsByClassName('show')];
+    const numShown = showLetters.length;
+    for (let i = 0; i < getLetters.length; i++) {
+        if (numLetters === numShown) {
+            overlay.className = 'win';
+            overlay.style.display = 'flex';
+            window.setTimeout(2);
+            overlay.querySelector('.title').textContent = 'You won!';
+            overlay.querySelector('a').outerHTML = '<a class="btn__reset" onclick="location.reload();">Try again?</a>';
+        }
+    }
+    if (letterFound === null) {
         tries[missed].innerHTML = '<img src="images/lostHeart.png" height="35px" width="30px">';
         missed++;
         if (missed === 5) {
@@ -120,5 +132,6 @@ function checkWin() {
         }
 
     }
+
 
 }

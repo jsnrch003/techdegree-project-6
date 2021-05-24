@@ -57,6 +57,11 @@ button {
   transition: var(--transition);
 }
 
+button:hover {
+  cursor: pointer;
+  border: 1px solid #5b85b7;
+}
+
 .main-container {
   display: flex;
   flex-direction: column;
@@ -91,6 +96,8 @@ button {
   border-radius: 5px;
 }
 
+
+
 .space {
   width: 20px;
 }
@@ -106,6 +113,8 @@ button {
   margin-bottom: 2px;
   background-color:  #f6f6e8;
   border-radius: 5px;
+  transition: all .7s ease-in;
+  transform: rotateY(360deg);
 }
 
 /* Keyboard */
@@ -129,6 +138,8 @@ button {
   border-radius: 5px;
   font-size: var(--font-size-medium);
 }
+
+
 
 /* Overlay */
 
