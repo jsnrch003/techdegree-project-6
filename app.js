@@ -89,7 +89,7 @@ function checkLetter(button) {
     if (letterFound === false) { // back outside loop, if letterFound is still false
         return null; // return null
     } else // if letterFound is true
-        return letterFound; // return number of letters shown
+        return letterFound; // return letterFound
 }
 
 // =============================  #8/#9 =============================
