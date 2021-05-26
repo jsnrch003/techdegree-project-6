@@ -11,6 +11,7 @@ const start = overlay.querySelector('.start a');
 
 // =============================  #3  =============================
 // Attach event listener to the "Start Game" button to hide the start screen overlay
+
 start.addEventListener('click', () => {
     overlay.style.display = 'none';
 });
@@ -48,6 +49,7 @@ const phraseArray = getRandomPhraseAsArray(phrases);
 
 // =============================  #6  =============================
 // Set the game display
+
 function addPhraseToDisplay(arr) {
     const displayDiv = document.getElementById('phrase'); // get #phrase <div> in HTML
     const displayUl = displayDiv.querySelector('ul'); // get <ul> child from parent #phrase <div> in HTML
@@ -70,57 +72,39 @@ const phraseToDisplay = addPhraseToDisplay(phraseArray);
 
 // =============================  #7  =============================
 // Create a checkLetter function
-const getLetters = [...phraseToDisplay.getElementsByClassName('letter')];
-const numLetters = getLetters.length;
-let letterFound = 0;
-let missed = 0;
+
+const phraseLetters = [...phraseToDisplay.getElementsByClassName('letter')];
+const numLetters = phraseLetters.length;
 
 function checkLetter(button) {
-    let match = false; // default state of match Letter
+    let letterFound = false; // default state of letterFound
 
-    for (let i = 0; i < getLetters.length; i++) { // loop through letters of phrase
-        let liText = getLetters[i].textContent; // get text of <li> items making up phrase
-        if (button === liText) { // if button clicked matches a letter of the phrase
-            (getLetters[i].className = 'show'); // add class "show" to <li> item containg matched letter
-            letterFound++; // keep count of number of letters shown
-            match = true; // since button clicked matches a letter of the phrase, set match to true
+    for (let i = 0; i < phraseLetters.length; i++) { // loop through phraseLetters
+        let liText = phraseLetters[i].textContent; // get text of <li> items making up phraseLetters
+        if (button === liText) { // if button clicked matches any phraseLetters
+            (phraseLetters[i].className = 'show'); // add class "show" to <li> item(s) containg matched letter
+            letterFound = true; // since button clicked matches a letter of the phrase, set letterFound to true
         }
     }
-    if (match === false) { // back outside loop, if match is still false
+    if (letterFound === false) { // back outside loop, if letterFound is still false
         return null; // return null
-    } else // if match is true
+    } else // if letterFound is true
         return letterFound; // return number of letters shown
 }
 
-// =============================  #8/#9  =============================
+// =============================  #8/#9 =============================
 // Add an event listener to keyboard
+
 const scoreboard = document.getElementById('scoreboard');
 const tries = scoreboard.querySelectorAll('.tries');
+let missed = 0;
 
 qwerty.addEventListener('click', (e) => {
-    const buttonSelection = e.target;
-    const button = buttonSelection.textContent.toUpperCase();
-    buttonSelection.className = 'chosen';
-    buttonSelection.disabled = true;
-    letterFound = checkLetter(button);
-    console.log(letterFound);
-    checkWin();
-});
-
-// =============================  #10  =============================
-// Create a checkWin function
-function checkWin() {
-    const showLetters = [...phraseToDisplay.getElementsByClassName('show')];
-    const numShown = showLetters.length;
-    for (let i = 0; i < getLetters.length; i++) {
-        if (numLetters === numShown) {
-            overlay.className = 'win';
-            overlay.style.display = 'flex';
-            window.setTimeout(2);
-            overlay.querySelector('.title').textContent = 'You won!';
-            overlay.querySelector('a').outerHTML = '<a class="btn__reset" onclick="location.reload();">Try again?</a>';
-        }
-    }
+    const button = e.target;
+    const letter = button.textContent.toUpperCase();
+    button.className = 'chosen';
+    button.disabled = true;
+    letterFound = checkLetter(letter);
     if (letterFound === null) {
         tries[missed].innerHTML = '<img src="images/lostHeart.png" height="35px" width="30px">';
         missed++;
@@ -130,8 +114,22 @@ function checkWin() {
             overlay.querySelector('.title').textContent = 'You lost!';
             overlay.querySelector('a').outerHTML = '<a class="btn__reset" onclick="location.reload();">Try again?</a>';
         }
-
     }
+    checkWin();
+});
 
+// =============================  #10  =============================
+// Create a checkWin function
 
+function checkWin() {
+    const lettersShown = [...phraseToDisplay.getElementsByClassName('show')];
+    const numShown = lettersShown.length;
+    for (let i = 0; i < phraseLetters.length; i++) {
+        if (numLetters === numShown) {
+            overlay.className = 'win';
+            overlay.style.display = 'flex';
+            overlay.querySelector('.title').textContent = 'You won!';
+            overlay.querySelector('a').outerHTML = '<a class="btn__reset" onclick="location.reload();">Try again?</a>';
+        }
+    }
 }

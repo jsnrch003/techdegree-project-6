@@ -62,6 +62,7 @@ button:hover {
   border: 1px solid #5b85b7;
 }
 
+
 .main-container {
   display: flex;
   flex-direction: column;
@@ -102,6 +103,10 @@ button:hover {
   width: 20px;
 }
 
+/* .jello-horizontal {
+	-webkit-animation: jello-horizontal 0.9s both;
+	        animation: jello-horizontal 0.9s both; */
+
 .show {
   color: #000;
   font-size: var(--font-size-medium);
@@ -112,9 +117,9 @@ button:hover {
   margin-right: 2px;
   margin-bottom: 2px;
   background-color:  #f6f6e8;
+  border: 1px solid var(  --color-neutral);
   border-radius: 5px;
   transition: all .7s ease-in;
-  transform: rotateY(360deg);
 }
 
 /* Keyboard */
