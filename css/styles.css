@@ -16,7 +16,7 @@
   --transition: all .2s ease-in-out;
 }
 
-/* main */
+/* Main */
 
 * {
   box-sizing: border-box;
@@ -62,6 +62,9 @@ button:hover {
   border: 1px solid #5b85b7;
 }
 
+a:hover {
+  cursor: pointer;
+}
 
 .main-container {
   display: flex;
@@ -97,15 +100,9 @@ button:hover {
   border-radius: 5px;
 }
 
-
-
 .space {
   width: 20px;
 }
-
-/* .jello-horizontal {
-	-webkit-animation: jello-horizontal 0.9s both;
-	        animation: jello-horizontal 0.9s both; */
 
 .show {
   color: #000;
@@ -144,8 +141,6 @@ button:hover {
   font-size: var(--font-size-medium);
 }
 
-
-
 /* Overlay */
 
 #overlay {
@@ -170,11 +165,7 @@ button:hover {
 }
 
 .start a {
-  color: var(--color-win);
-}
-
-.start a:hover {
-  cursor: pointer;
+  color: var(--color-start);
 }
 
 .win {
@@ -186,10 +177,6 @@ button:hover {
   color: var(--color-win);
 }
 
-.win a:hover {
-  cursor: pointer;
-}
-
 .lose {
   background-color: var(--color-lose);
   display: none;
@@ -197,8 +184,4 @@ button:hover {
 
 .lose a {
   color: var(--color-lose);
-}
-
-.lose a:hover {
-  cursor: pointer;
 }
