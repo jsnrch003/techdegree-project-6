@@ -100,11 +100,14 @@ const tries = scoreboard.querySelectorAll('.tries');
 let missed = 0;
 
 qwerty.addEventListener('click', (e) => {
+    let letterFound;
     const button = e.target;
     const letter = button.textContent.toUpperCase();
-    button.className = 'chosen';
-    button.disabled = true;
-    letterFound = checkLetter(letter);
+    if (e.target.tagName === 'BUTTON') {
+        button.className = 'chosen';
+        button.disabled = true;
+        letterFound = checkLetter(letter);
+    }
     if (letterFound === null) {
         tries[missed].innerHTML = '<img src="images/lostHeart.png" height="35px" width="30px">';
         missed++;
