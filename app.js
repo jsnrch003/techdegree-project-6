@@ -37,6 +37,7 @@ const phrases = [
 // =============================  #5  =============================
 // Create a getRandomPhraseArray
 
+let phraseArray = getRandomPhraseAsArray(phrases);
 function getRandomPhraseAsArray(arr) {
     const randNum = Math.floor(Math.random() * 10); // 1 for testing 
     const randPhrase = arr[randNum]; // Create a function that randomly chooses a phrase from phrases array,
@@ -44,12 +45,11 @@ function getRandomPhraseAsArray(arr) {
     return randPhrase; // and returns the new character array
 }
 
-const phraseArray = getRandomPhraseAsArray(phrases);
-
 
 // =============================  #6  =============================
 // Set the game display
 
+let phraseToDisplay = addPhraseToDisplay(phraseArray);
 function addPhraseToDisplay(arr) {
     const displayDiv = document.getElementById('phrase'); // get #phrase <div> in HTML
     const displayUl = displayDiv.querySelector('ul'); // get <ul> child from parent #phrase <div> in HTML
@@ -67,17 +67,13 @@ function addPhraseToDisplay(arr) {
     return displayUl;
 };
 
-const phraseToDisplay = addPhraseToDisplay(phraseArray);
-
 
 // =============================  #7  =============================
 // Create a checkLetter function
 
-const phraseLetters = [...phraseToDisplay.getElementsByClassName('letter')];
-const numLetters = phraseLetters.length;
-
 function checkLetter(button) {
     let letterFound = false; // default state of letterFound
+    let phraseLetters = [...phraseToDisplay.getElementsByClassName('letter')];
 
     for (let i = 0; i < phraseLetters.length; i++) { // loop through phraseLetters
         let liText = phraseLetters[i].textContent; // get text of <li> items making up phraseLetters
@@ -97,16 +93,17 @@ function checkLetter(button) {
 
 const scoreboard = document.getElementById('scoreboard');
 const tries = scoreboard.querySelectorAll('.tries');
+let letterFound;
 let missed = 0;
 
 qwerty.addEventListener('click', (e) => {
-    let letterFound;
-    const button = e.target;
-    const letter = button.textContent.toUpperCase();
+    let button = e.target;
+    let letter = button.textContent.toUpperCase();
     if (e.target.tagName === 'BUTTON') {
         button.className = 'chosen';
         button.disabled = true;
         letterFound = checkLetter(letter);
+        checkWin();
     }
     if (letterFound === null) {
         tries[missed].innerHTML = '<img src="images/lostHeart.png" height="35px" width="30px">';
@@ -115,24 +112,64 @@ qwerty.addEventListener('click', (e) => {
             overlay.className = 'lose';
             overlay.style.display = 'flex';
             overlay.querySelector('.title').textContent = 'You lost!';
-            overlay.querySelector('a').outerHTML = '<a class="btn__reset" onclick="location.reload();">Try again?</a>';
+            overlay.querySelector('a').outerHTML = '<a class="btn__reset" onclick="reset()">Try again?</a>';
         }
     }
-    checkWin();
 });
 
 // =============================  #10  =============================
 // Create a checkWin function
 
 function checkWin() {
-    const lettersShown = [...phraseToDisplay.getElementsByClassName('show')];
-    const numShown = lettersShown.length;
-    for (let i = 0; i < phraseLetters.length; i++) {
-        if (numLetters === numShown) {
-            overlay.className = 'win';
-            overlay.style.display = 'flex';
-            overlay.querySelector('.title').textContent = 'You won!';
-            overlay.querySelector('a').outerHTML = '<a class="btn__reset" onclick="location.reload();">Try again?</a>';
-        }
+    let lettersShown = phraseToDisplay.innerText;
+    if (letterFound === lettersShown.length) {
+        console.log(letterFound);
+        console.log(lettersShown.length);
+        overlay.className = 'win';
+        overlay.style.display = 'flex';
+        overlay.querySelector('.title').textContent = 'You won!';
+        overlay.querySelector('a').outerHTML = '<a class="btn__reset" onclick="reset()">Try again?</a>';
     }
+}
+
+
+// =============================  #Extra Credit  =============================
+// Reset game
+
+
+function reset() {
+    overlay.style.display = 'none';
+    clearPhraseFromDisplay();
+    resetButtons();
+    resetTries();
+    newPhrase();
+}
+
+function clearPhraseFromDisplay() {
+    const displayDiv = document.getElementById('phrase'); // get #phrase <div> in HTML
+    const displayUl = displayDiv.querySelector('ul'); // get <ul> child from parent #phrase <div> in HTML
+    const displayLi = displayUl.querySelectorAll('li');
+    for (let i = 0; i < displayLi.length; i++) {
+        displayLi[i].remove();
+    }
+};
+
+function resetButtons() {
+    const buttons = qwerty.getElementsByTagName('button');
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].className = '';
+        buttons[i].disabled = false;
+    }
+}
+
+function resetTries() {
+    missed = 0;
+    for (let i = 0; i < tries.length; i++) {
+        tries[i].innerHTML = '<img src="images/liveHeart.png" height="35px" width="30px">';
+    }
+}
+
+function newPhrase() {
+    let nextRound = getRandomPhraseAsArray(phrases);
+    addPhraseToDisplay(nextRound);
 }
