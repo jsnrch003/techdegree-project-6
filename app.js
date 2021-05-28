@@ -77,9 +77,9 @@ function checkLetter(button) {
 
     for (let i = 0; i < phraseLetters.length; i++) { // loop through phraseLetters
         let liText = phraseLetters[i].textContent; // get text of <li> items making up phraseLetters
-        if (button === liText) { // if button clicked matches any phraseLetters
-            (phraseLetters[i].className = 'show'); // add class "show" to <li> item(s) containg matched letter
-            letterFound = true; // since button clicked matches a letter of the phrase, set letterFound to true
+        if (button === liText) { // if button clicked letterFoundes any phraseLetters
+            (phraseLetters[i].className = 'show'); // add class "show" to <li> item(s) containg letterFounded letter
+            letterFound = true; // since button clicked letterFoundes a letter of the phrase, set letterFound to true
         }
     }
     if (letterFound === false) { // back outside loop, if letterFound is still false
@@ -122,9 +122,8 @@ qwerty.addEventListener('click', (e) => {
 
 function checkWin() {
     let lettersShown = phraseToDisplay.innerText;
-    if (letterFound === lettersShown.length) {
-        console.log(letterFound);
-        console.log(lettersShown.length);
+    let lettersFound = [...phraseToDisplay.getElementsByClassName('show')];
+    if (lettersFound.length === lettersShown.length) {
         overlay.className = 'win';
         overlay.style.display = 'flex';
         overlay.querySelector('.title').textContent = 'You won!';
