@@ -7,8 +7,6 @@ const overlay = document.getElementById('overlay');
 const start = overlay.querySelector('.start a');
 
 
-
-
 // =============================  #3  =============================
 // Attach event listener to the "Start Game" button to hide the start screen overlay
 
@@ -39,7 +37,7 @@ const phrases = [
 
 let phraseArray = getRandomPhraseAsArray(phrases);
 function getRandomPhraseAsArray(arr) {
-    const randNum = Math.floor(Math.random() * 10); // 1 for testing 
+    const randNum = Math.floor(Math.random() * 10); // random number generator 0-9
     const randPhrase = arr[randNum]; // Create a function that randomly chooses a phrase from phrases array,
     randPhrase.split(''); // splits that phrase into a new array of characters,
     return randPhrase; // and returns the new character array
@@ -55,12 +53,12 @@ function addPhraseToDisplay(arr) {
     const displayUl = displayDiv.querySelector('ul'); // get <ul> child from parent #phrase <div> in HTML
 
     for (let i = 0; i < arr.length; i++) {
-        const li = document.createElement('li'); // creates a list item for each character,
-        li.textContent = arr[i].toUpperCase(); // puts the character inside list item,
-        if (li.textContent === ' ') { // adds class "space" or "letter" to respective character,
-            li.className = 'space';
+        const li = document.createElement('li'); // bind <li> item creation to variable,
+        li.textContent = arr[i].toUpperCase(); // puts the character inside <li> item,
+        if (li.textContent === ' ') {
+            li.className = 'space'; // adds class="space" to respective character,
         } else {
-            li.className = 'letter';
+            li.className = 'letter'; // adds class="letter" to respective character,
         }
         displayUl.appendChild(li); // and appends list item to #phrase <ul> in HTML
     }
@@ -73,12 +71,12 @@ function addPhraseToDisplay(arr) {
 
 function checkLetter(button) {
     let letterFound = false; // default state of letterFound
-    let phraseLetters = [...phraseToDisplay.getElementsByClassName('letter')];
+    let phraseLetters = [...phraseToDisplay.getElementsByClassName('letter')]; // get phrase <li> items with class="letters"
 
-    for (let i = 0; i < phraseLetters.length; i++) { // loop through phraseLetters
+    for (let i = 0; i < phraseLetters.length; i++) { // loop through phrase <li> items that have class="letters"
         let liText = phraseLetters[i].textContent; // get text of <li> items making up phraseLetters
         if (button === liText) { // if button clicked letterFoundes any phraseLetters
-            (phraseLetters[i].className = 'show'); // add class "show" to <li> item(s) containg letterFounded letter
+            (phraseLetters[i].className = 'show'); // add class="show" to <li> item(s) containg letterFounded letter
             letterFound = true; // since button clicked letterFoundes a letter of the phrase, set letterFound to true
         }
     }
