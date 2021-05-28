@@ -103,15 +103,15 @@ qwerty.addEventListener('click', (e) => {
         button.disabled = true;
         letterFound = checkLetter(letter);
         checkWin();
-    }
-    if (letterFound === null) {
-        tries[missed].innerHTML = '<img src="images/lostHeart.png" height="35px" width="30px">';
-        missed++;
-        if (missed === 5) {
-            overlay.className = 'lose';
-            overlay.style.display = 'flex';
-            overlay.querySelector('.title').textContent = 'You lost!';
-            overlay.querySelector('a').outerHTML = '<a class="btn__reset" onclick="reset()">Try again?</a>';
+        if (letterFound === null) {
+            tries[missed].innerHTML = '<img src="images/lostHeart.png" height="35px" width="30px">';
+            missed++;
+            if (missed === 5) {
+                overlay.className = 'lose';
+                overlay.style.display = 'flex';
+                overlay.querySelector('.title').textContent = 'You lost!';
+                overlay.querySelector('a').outerHTML = '<a class="btn__reset" onclick="reset()">Try again?</a>';
+            }
         }
     }
 });
