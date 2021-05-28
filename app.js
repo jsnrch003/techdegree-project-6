@@ -5,6 +5,8 @@ const qwerty = document.getElementById('qwerty');
 const phrase = document.getElementById('phrase');
 const overlay = document.getElementById('overlay');
 const start = overlay.querySelector('.start a');
+const displayDiv = document.getElementById('phrase'); // get #phrase <div> in HTML
+const displayUl = displayDiv.querySelector('ul'); // get <ul> child from parent #phrase <div> in HTML
 
 
 // =============================  #3  =============================
@@ -36,6 +38,7 @@ const phrases = [
 // Create a getRandomPhraseArray
 
 let phraseArray = getRandomPhraseAsArray(phrases);
+
 function getRandomPhraseAsArray(arr) {
     const randNum = Math.floor(Math.random() * 10); // random number generator 0-9
     const randPhrase = arr[randNum]; // Create a function that randomly chooses a phrase from phrases array,
@@ -48,10 +51,8 @@ function getRandomPhraseAsArray(arr) {
 // Set the game display
 
 let phraseToDisplay = addPhraseToDisplay(phraseArray);
-function addPhraseToDisplay(arr) {
-    const displayDiv = document.getElementById('phrase'); // get #phrase <div> in HTML
-    const displayUl = displayDiv.querySelector('ul'); // get <ul> child from parent #phrase <div> in HTML
 
+function addPhraseToDisplay(arr) {
     for (let i = 0; i < arr.length; i++) {
         const li = document.createElement('li'); // bind <li> item creation to variable,
         li.textContent = arr[i].toUpperCase(); // puts the character inside <li> item,
@@ -143,8 +144,6 @@ function reset() {
 }
 
 function clearPhraseFromDisplay() {
-    const displayDiv = document.getElementById('phrase'); // get #phrase <div> in HTML
-    const displayUl = displayDiv.querySelector('ul'); // get <ul> child from parent #phrase <div> in HTML
     const displayLi = displayUl.querySelectorAll('li');
     for (let i = 0; i < displayLi.length; i++) {
         displayLi[i].remove();
