@@ -13,3 +13,5 @@ A player can keep choosing letters until they make five incorrect guesses. If th
 If the player completes the phrase before they run out of guesses, a winning screen will display. If the player guesses incorrectly 5 times, a losing screen will display.
 
 A player can guess a letter only once. After they’ve guessed a letter, that letter is disabled.
+
+Play a round or two here: https://jsnrch003.github.io/techdegree-project-6/
