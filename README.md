@@ -1,5 +1,7 @@
 # Techdegree Project 6 -- Game Show App
 
+In this project, I created a word guessing game, “Wheel of Success”, where players click letters from an onscreen keyboard to try to guess a random phrase.
+
 Team Treehouse provided the HTML and CSS. All JavaScript is my own.
 
 Using Javascript, I created an array of phrases and write functions to choose a random phrase from that array, split the phrase into letters, and put those letters onto the game board.
